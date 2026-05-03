@@ -36,6 +36,17 @@ const energySavingSwitchBtn = $("#energy-saving-switch-btn");
 const enterRoomBtn = $("#enter-room-btn");
 const exitRoomBtn = $("#exit-room-btn");
 const videoTag = $("#video-tag");
+const navToggleBtn = $("#nav-toggle-btn");
+const sideNav = document.querySelector('nav');
+
+if (navToggleBtn && sideNav) {
+    navToggleBtn.addEventListener('click', () => {
+        sideNav.classList.toggle('hidden');
+        // update aria attribute for accessibility
+        const isHidden = sideNav.classList.contains('hidden');
+        sideNav.setAttribute('aria-hidden', isHidden ? 'true' : 'false');
+    });
+}
 
 
 
