@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+	--color-on-error: #690005;
+	--color-secondary-fixed: #83fba5;
+	--color-on-tertiary-container: #292a2a;
+	--color-secondary-fixed-dim: #66dd8b;
+	--color-primary: #ffb4a8;
+	--color-surface-dim: #131313;
+	--color-on-surface-variant: #ebbbb4;
+	--color-on-secondary-fixed: #00210c;
+	--color-on-primary-fixed-variant: #930100;
+	--color-tertiary-fixed: #e3e2e2;
+	--color-background: #131313;
+	--color-surface-container: #20201f;
+	--color-on-tertiary: #2f3031;
+	--color-outline: #b18780;
+	--color-primary-fixed: #ffdad4;
+	--color-secondary: #66dd8b;
+	--color-primary-container: #ff5540;
+	--color-on-tertiary-fixed-variant: #464747;
+	--color-on-background: #e5e2e1;
+	--color-on-secondary: #003919;
+	--color-surface-container-lowest: #0e0e0e;
+	--color-on-primary: #690100;
+	--color-surface-bright: #393939;
+	--color-surface-container-highest: #353535;
+	--color-on-tertiary-fixed: #1b1c1c;
+	--color-secondary-container: #25a55a;
+	--color-tertiary-container: #919191;
+	--color-on-error-container: #ffdad6;
+	--color-tertiary-fixed-dim: #c7c6c6;
+	--color-tertiary: #c7c6c6;
+	--color-on-primary-fixed: #410000;
+	--color-on-secondary-container: #003115;
+	--color-surface-container-high: #2a2a2a;
+	--color-error-container: #93000a;
+	--color-surface-tint: #ffb4a8;
+	--color-surface-container-low: #1c1b1b;
+	--color-on-surface: #e5e2e1;
+	--color-error: #ffb4ab;
+	--color-inverse-primary: #c00100;
+	--color-primary-fixed-dim: #ffb4a8;
+	--color-on-primary-container: #5c0000;
+	--color-outline-variant: #603e39;
+	--color-on-secondary-fixed-variant: #005227;
+	--color-surface-variant: #353535;
+	--color-surface: #131313;
+	--color-inverse-on-surface: #313030;
+	--color-inverse-surface: #e5e2e1;
+
+	--radius-default: 0.25rem;
+	--radius-lg: 0.5rem;
+	--radius-xl: 0.75rem;
+	--radius-full: 9999px;
+
+	--spacing-container-padding: 24px;
+	--spacing-viewport-margin: 32px;
+	--spacing-block-unit: 4px;
+	--spacing-gutter: 16px;
+
+	--font-headline-lg: "Space Grotesk";
+	--font-headline-md: "Space Grotesk";
+	--font-label-pixel: "Space Grotesk";
+	--font-body-reg: "Space Grotesk";
+
+	--text-headline-lg: 32px;
+	--text-headline-lg--line-height: 1.2;
+	--text-headline-lg--letter-spacing: -0.02em;
+	--text-headline-lg--font-weight: 700;
+	--text-headline-md: 24px;
+	--text-headline-md--line-height: 1.2;
+	--text-headline-md--font-weight: 700;
+	--text-label-pixel: 12px;
+	--text-label-pixel--line-height: 1;
+	--text-label-pixel--font-weight: 700;
+	--text-body-reg: 16px;
+	--text-body-reg--line-height: 1.5;
+	--text-body-reg--font-weight: 400;
+}
+
+@layer utilities {
+	.material-symbols-outlined {
+		font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+	}
+
+	.icon-fill {
+		font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+	}
+
+	.plate-stone {
+		@apply bg-tertiary border-solid border-tertiary-container border-2 border-b-4 border-r-4;
+	}
+
+	.plate-stone:active {
+		@apply border-b-2 border-r-2;
+		transform: translate(2px, 2px);
+	}
+
+	.lamp-off {
+		@apply bg-surface-container-lowest border-solid border-surface-variant border-2;
+		background-image: repeating-linear-gradient(45deg, #131313 25%, transparent 25%, transparent 75%, #131313 75%, #131313), repeating-linear-gradient(45deg, #131313 25%, #0e0e0e 25%, #0e0e0e 75%, #131313 75%, #131313);
+		background-position: 0 0, 4px 4px;
+		background-size: 8px 8px;
+	}
+    
+    .lamp-on {
+        @apply bg-yellow-700 border-solid border-primary-fixed border-2;
+        background-image: radial-gradient(circle at center, rgb(175, 236, 32) 0%, #69f119 70%, #829b13 100%);
+        background-size: cover;
+        background-position: center;
+    }
+
+	.brick-border {
+		@apply border-8 border-solid border-surface-variant;
+		box-shadow: inset 4px 4px 0px 0px rgba(255, 255, 255, 0.1), inset -4px -4px 0px 0px rgba(0, 0, 0, 0.5);
+	}
+
+	.pressure-plate-wood {
+		@apply border-solid border-4 border-b-8 transition-all duration-100;
+		background-color: #8b5a2b;
+		border-color: #5d3a1a;
+		box-shadow: inset 4px 4px 0px 0px rgba(255, 255, 255, 0.2);
+		color: #ffdad4;
+	}
+
+	.pressure-plate-wood:active {
+		border-bottom-width: 2px;
+		transform: translateY(6px);
+		box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+	}
+
+	.pressure-plate-stone {
+		@apply border-solid border-4 border-b-8 transition-all duration-100;
+		background-color: #7d7d7d;
+		border-color: #4a4a4a;
+		box-shadow: inset 4px 4px 0px 0px rgba(255, 255, 255, 0.2);
+		color: #e5e2e1;
+	}
+
+	.pressure-plate-stone:active {
+		border-bottom-width: 2px;
+		transform: translateY(6px);
+		box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+	}
+}

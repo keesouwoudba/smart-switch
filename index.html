@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Circuit Sim V1 - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <script src="app.js" defer type="module"></script>
+    <link href="./dist/output.css" rel="stylesheet">
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-hidden flex flex-col font-body-reg">
+    <!-- TopAppBar -->
+    <header class="bg-[#131313] font-['Space_Grotesk'] uppercase tracking-tighter docked full-width top-0 border-b-4 border-stone-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center px-4 h-16 w-full z-50 fixed">
+        <div class="flex items-center gap-6">
+            <span class="text-2xl font-bold text-stone-200 border-b-4 border-inverse-primary pb-1">CIRCUIT_SIM_V1</span>
+            <div class="flex gap-2 items-center">
+                <span class="font-label-pixel text-secondary bg-[#0a0a0a] px-3 py-1 border-2 border-stone-800 tracking-widest shadow-[inset_0_0_8px_rgba(102,221,139,0.2)]">SYSTEM_STATUS: STANDBY</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="text-stone-400 hover:text-white hover:bg-stone-800 transition-colors p-2">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+            <button class="text-stone-400 hover:text-white hover:bg-stone-800 transition-colors p-2">
+                <span class="material-symbols-outlined">help</span>
+            </button>
+            <div class="w-8 h-8 bg-surface-variant border-2 border-outline flex items-center justify-center overflow-hidden">
+                <img alt="Engineer Avatar" class="w-full h-full object-cover" data-alt="A low-resolution pixel art style portrait of an engineer character, featuring a rugged face with goggles resting on the forehead. The portrait is rendered in a limited palette of earth tones and grays, emphasizing a retro gaming aesthetic. High-contrast blocky shading defines the facial features against a dark, solid background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm0VgOmV3fXDpre6CR4KOKZe_uF-KeEQJpGQjI5oZprzmsMb9LN18hlsJkuyIe2tSCogHsvCu7xpSd70UBDUtv95Lk-cjNIGuH-1hKrzq6Xku-1wCTukl5w3kzdCgou10vKIqXbZHDktJstmwtiQNQUNPTenM_4LYTqpc3DVY0ItbQW3EuZlmFJfKUV2m0Nuux4NG-4ts8iCVAIarXEcUu6uD0IIelyEXbxi5tKbO1mvugvIMpYoIV-kJ3UDlvnE0ySv-zECJMtqE"/>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Area -->
+    <main class="grow flex pt-16 h-screen">
+        <!-- Viewport Canvas -->
+        <div class="grow p-viewport-margin flex flex-col gap-gutter overflow-y-auto bg-surface-dim mr-90">
+            <!-- Central Video Viewport -->
+            <div class="w-full max-w-6xl mx-auto aspect-video bg-surface-container-lowest brick-border relative flex items-center justify-center overflow-hidden">
+                <video class="w-full h-full object-cover" src="data/v1.mp4" autoplay muted playsinline preload="auto" id="video-tag"></video>
+                <!-- Crosshair overlay -->
+                <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                    <div class="w-4 h-0.5 bg-white/50"></div>
+                    <div class="h-4 w-0.5 bg-white/50 absolute"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- SideNavBar -->
+    <nav class="bg-[#1a1a1a] text-stone-200 font-['Space_Grotesk'] text-xs font-bold uppercase fixed right-0 h-full w-90 border-l-4 border-stone-900 shadow-[-4px_0px_0px_0px_rgba(0,0,0,1)] flex flex-col pt-16 z-40">
+        <!-- Header -->
+        <div class="p-5 border-b-4 border-stone-900 bg-[#131313]">
+            <h2 class="text-xl text-stone-100 font-headline-md tracking-tight">CONTROL_UNIT</h2>
+            <p class="text-stone-400 font-label-pixel mt-1">OBSIDIAN_CORE</p>
+        </div>
+        <!-- Controls Container -->
+        <div class="grow overflow-y-auto flex flex-col p-5 gap-8">
+            <!-- Logic Properties Panel -->
+            <div class="flex flex-col gap-4">
+                <button class="flex items-center justify-between bg-surface-container-low p-4 border-2 border-surface-variant hover:border-outline hover:bg-surface-container transition-all group text-left w-full" id="light-switch-btn">
+                    <span class="font-label-pixel text-on-surface uppercase group-hover:text-white transition-colors">Light Switch</span>
+                    <div class="w-10 h-10 lamp-off rounded-none shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.5)] shrink-0" id="light-lamp"></div>
+                </button>
+                <button class="flex items-center justify-between bg-surface-container-low p-4 border-2 border-surface-variant hover:border-outline hover:bg-surface-container transition-all group text-left w-full" id="energy-saving-switch-btn">
+                    <span class="font-label-pixel text-on-surface uppercase group-hover:text-white transition-colors">Energy Saving Mode</span>
+                    <div class="w-10 h-10 lamp-off rounded-none shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.5)] shrink-0" id="energy-lamp"></div>
+                </button>
+            </div>
+            <!-- Sensor Triggers Panel -->
+            <div class="flex flex-col gap-4">
+                <h3 class="font-headline-md text-outline uppercase border-b-2 border-surface-variant pb-2 text-[16px] tracking-wide">Sensor Triggers</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <button class="pressure-plate-wood flex items-center justify-center w-full py-6 px-4 font-headline-md text-[18px] tracking-widest uppercase" id="enter-room-btn">
+                        ENTER ROOM
+                    </button>
+                    <button class="pressure-plate-stone flex items-center justify-center w-full py-6 px-4 font-headline-md text-[18px] tracking-widest uppercase" id="exit-room-btn">
+                        EXIT ROOM
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Footer / CTA -->
+        <div class="p-5 border-t-4 border-stone-900 bg-[#131313] flex flex-col gap-3"></div>
+    </nav>
+</body>
+</html>
