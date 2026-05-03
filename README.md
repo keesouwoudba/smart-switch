@@ -156,6 +156,4 @@ What we changed or improved:
 - Add a mobile-friendly IoT control layer.
 - Expand the Minecraft/redstone version into a fuller interactive demo.
 
-## Submission Notes
 
-For the final Canvas submission, include the GitHub link, CircuitVerse link, presentation PDF, and demo video link if available.
