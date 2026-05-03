@@ -4,17 +4,17 @@ window.app = {
     enteringTheRoom: false, 
     standingOutside: true,
     leavingTheRoom: false,
-    currentVideo: "data/v1.mp4", // Default video source
+    currentVideo: "data/v1_final.mp4", // Default video source
 
 };
 const app = window.app;
 const videoSources = {
-    v1_src : "data/v1.mp4", //standing outside, light off
-    v2_src : "data/v2.mp4", //standing outside, light on
-    v3_src : "data/v3.mp4", //entering room, light turns on
-    v4_src : "data/v4.mp4", //entering room, light was on
-    v5_src : "data/v5.mp4", //leaving room, light turns off (energy saving mode)
-    v6_src : "data/v6.mp4", //leaving room, light stays on (normal mode, if switch is on)
+    v1_src : "data/v1_final.mp4", //standing outside, light off
+    v2_src : "data/v2_final.mp4", //standing outside, light on
+    v3_src : "data/v3_final.mp4", //entering room, light turns on
+    v4_src : "data/v4_final.mp4", //entering room, light was on
+    v5_src : "data/v5_final.mp4", //leaving room, light turns off (energy saving mode)
+    v6_src : "data/v6_final.mp4", //leaving room, light stays on (normal mode, if switch is on)
 }
 
 
