@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Smart Switch — EEE120 Group Project</title>
+
+  <!-- Reveal.js Core CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+        /* ── Root Variables ── */
+    :root {
+    --r-background-color: #0d1117;
+    --r-main-font: "Syne", sans-serif;
+    --r-main-font-size: 28px;          /* up from 20px — base for all em calculations */
+    --r-main-color: #e6edf3;
+    --r-heading-font: "Syne", sans-serif;
+    --r-heading-color: #f0b247;
+    --r-heading-text-transform: none;
+    --r-heading-line-height: 1.2;
+    --color-primary: #f0b247;
+    --color-accent: #7ee787;
+    --color-accent2: #79c0ff;
+    --color-muted: #8b949e;
+    --color-surface: rgba(255,255,255,0.05);
+    --color-surface2: rgba(255,255,255,0.08);
+    --color-border: rgba(255,255,255,0.1);
+    }
+
+    /* ── Global Resets & Overrides ── */
+    .reveal .slides section {
+    text-align: left;
+    }
+
+    .reveal h1 {
+    font-size: 2.8em;
+    color: var(--color-primary);
+    text-shadow: 0 0 40px rgba(240,178,71,0.35);
+    letter-spacing: -0.02em;
+    }
+
+    .reveal h2 {
+    font-size: 1.9em;                  /* larger slide titles */
+    color: var(--color-primary);
+    border-bottom: 2px solid rgba(240,178,71,0.3);
+    padding-bottom: 0.2em;
+    margin-bottom: 0.45em;
+    text-shadow: 0 0 20px rgba(240,178,71,0.2);
+    }
+
+    .reveal h3 {
+    font-size: 1.1em;                    /* larger subheadings */
+    color: var(--color-accent);
+    margin-bottom: 0.3em;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    }
+
+    .reveal h4 {
+    font-size: 1.05em;                  /* slightly larger secondary headings */
+    color: var(--color-accent2);
+    margin-bottom: 0.2em;
+    }
+
+    .reveal p {
+    font-size: 0.55em;                  /* further reduced for compact content */
+    line-height: 1.6;
+    margin-bottom: 0.4em;
+    }
+
+    .reveal ul {
+    margin-left: 1.2em;
+    text-align: left;
+    }
+
+    .reveal li {
+    font-size: 0.76em;                   /* smaller list items */
+    line-height: 1.5;
+    margin-bottom: 0.18em;
+    }
+
+    .reveal li::marker {
+    color: var(--color-primary);
+    }
+
+    .reveal em {
+    color: var(--color-accent2);
+    font-style: normal;
+    }
+
+    .reveal strong {
+    color: var(--color-primary);
+    font-weight: 700;
+    }
+
+    .reveal section img {
+    border: none;
+    border-radius: 10px;
+    margin: 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    /* ── Two-Column Row System ── */
+    .row {
+    display: flex !important;
+    align-items: center;
+    gap: 1.8em;
+    width: 100%;
+    text-align: left;
+    }
+
+    .col-text {
+    flex: 1 1 55%;
+    min-width: 0;
+    }
+
+    .col-img {
+    flex: 0 0 38%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    }
+
+    .col-img img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    }
+
+    /* ── Stitch image (wide horizontal rectangle) ── */
+    #stitch-img {
+    display: block;
+    width: 92%;
+    max-width: 920px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0.35em auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    border: 1px solid var(--color-border);
+    }
+
+    .col-img.wide   { flex: 0 0 54%; }
+    .col-img.narrow { flex: 0 0 28%; }
+
+    /* ── Divider ── */
+    .reveal hr.divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 0.5em 0;
+    }
+
+    /* ── Callout / Info Boxes ── */
+    .callout-box {
+    background: rgba(240,178,71,0.1);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 0 6px 6px 0;
+    padding: 0.50em 0.80em;
+    font-size: 0.56em;                 /* reduced for compact display */
+    margin-top: 2em;
+    line-height: 1.6;
+    }
+
+    .info-box {
+    background: rgba(121,192,255,0.08);
+    border-left: 3px solid var(--color-accent2);
+    border-radius: 0 6px 6px 0;
+    padding: 0.45em 0.75em;
+    font-size: 0.60em;
+    margin-top: 0.4em;
+    line-height: 1.6;
+    }
+
+    .success-box {
+    background: rgba(126,231,135,0.08);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 6px 6px 0;
+    padding: 0.45em 0.75em;
+    font-size: 0.60em;
+    margin-top: 0.4em;
+    line-height: 1.6;
+    }
+
+    /* ── Title Slide ── */
+    .title-slide {
+    text-align: center !important;
+    }
+
+    .title-slide h1 {
+    font-size: 4.0em;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.1em;
+    }
+
+    .title-slide h3 {
+    font-size: 0.8em;                 /* larger subtitle */
+    color: var(--color-muted);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    margin-bottom: 1em;
+    }
+
+    .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45em 1em;
+    max-width: 780px;
+    margin: 0 auto 0.9em;
+    }
+
+    .team-member {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.5em 0.8em;
+    font-size: 0.64em;                  /* smaller team card text */
+    text-align: left;
+    line-height: 1.55;
+    }
+
+    .team-member .role {
+    color: var(--color-muted);
+    font-size: 0.70em;                  /* reduce secondary role text */
+    }
+
+    .course-badge {
+    display: inline-block;
+    background: rgba(240,178,71,0.15);
+    border: 1px solid rgba(240,178,71,0.3);
+    border-radius: 20px;
+    padding: 0.18em 0.9em;
+    font-size: 0.62em;                 /* smaller badge text */
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+    margin-top: 0.2em;
+    }
+
+    /* ── Tables ── */
+    .reveal table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.65em;                 /* further compressed */
+    margin: 0.3em 0;
+    }
+
+    .reveal table th {
+    background: rgba(240,178,71,0.15);
+    color: var(--color-primary);
+    font-weight: 700;
+    padding: 0.3em 0.5em;
+    border: 1px solid var(--color-border);
+    text-align: center;
+    font-size: 0.8em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    }
+
+    .reveal table td {
+    padding: 0.15em 0.3em;
+    border: 1px solid var(--color-border);
+    text-align: center;
+    color: var(--color-muted);
+    }
+
+    .reveal table tr.light-on td {
+    background: rgba(126,231,135,0.08);
+    }
+
+    .reveal table tr.light-on td:last-child {
+    color: var(--color-accent);
+    font-weight: 700;
+    }
+
+    .reveal table tr.light-off td:last-child {
+    color: #ef4444;
+    font-weight: 700;
+    }
+
+    /* ── Code / Boolean Expression ── */
+    .bool-expr {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.55em 0.9em;
+    font-family: inherit;
+    font-size: 0.95em;                 /* slightly larger for math render */
+    color: var(--color-accent2);
+    line-height: 1.8;
+    margin: 0.4em 0;
+    }
+
+    .bool-expr .kw { color: var(--color-primary); font-weight: 700; }
+    .bool-expr .op { color: #d2a8ff; }
+
+    /* ── Demo Button ── */
+    .demo-btn {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent) !important;
+    border-radius: 10px;
+    padding: 0.55em 1.4em;
+    font-size: 1.05em;                 /* ~23px — slightly larger for demo CTA */
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    text-decoration: none !important;
+    letter-spacing: 0.04em;
+    box-shadow: 0 0 24px rgba(126,231,135,0.2), inset 0 0 24px rgba(126,231,135,0.04);
+    }
+
+    .demo-arrow {
+    color: var(--color-accent);
+    font-size: 1.2em;
+    margin-right: 0.3em;
+    }
+
+    /* ── AI Cards ── */
+    .ai-cards {
+    display: flex;
+    gap: 0.9em;
+    margin-top: 0.4em;
+    width: 100%;
+    }
+
+    .ai-card {
+    flex: 1;
+    background: var(--color-surface2);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 0.65em 0.75em;
+    text-align: center;
+    }
+
+    .ai-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin: 0 auto 0.45em !important;
+    display: block;
+    box-shadow: none !important;
+    }
+
+    .ai-card h4 {
+    font-size: 0.9em;                  /* ~20px — was 0.82em */
+    margin-bottom: 0.35em;
+    color: var(--color-primary);
+    }
+
+    .ai-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    }
+
+    .ai-card li {
+    font-size: 0.62em;                  /* compact AI card items */
+    line-height: 1.55;
+    margin-bottom: 0.22em;
+    color: var(--color-muted);
+    padding-left: 0.9em;
+    position: relative;
+    }
+
+    .ai-card li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent2);
+    font-weight: 700;
+    }
+
+    /* ── Conclusion Cards ── */
+    .conclusion-grid {
+    display: flex;
+    gap: 0.85em;
+    margin-top: 0.45em;
+    }
+
+    .conc-card {
+    flex: 1;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 0.6em 0.75em;
+    }
+
+    .conc-card .card-title {
+    font-size: 0.82em;                 /* ~18px — was 0.75em */
+    font-weight: 800;
+    font-family: "DM Sans", "Syne", sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.38em;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    }
+
+    .conc-card ul { margin-left: 0.9em; }
+
+    .conc-card li {
+    font-size: 0.64em;                 /* smaller conclusion list */
+    line-height: 1.55;
+    margin-bottom: 0.22em;
+    }
+
+    .card-worked   .card-title { color: var(--color-accent);  }
+    .card-challenge .card-title { color: #fb923c; }
+    .card-future   .card-title { color: var(--color-accent2); }
+
+    .card-worked   { border-color: rgba(126,231,135,0.25); }
+    .card-challenge { border-color: rgba(251,146,60,0.25); }
+    .card-future   { border-color: rgba(121,192,255,0.25); }
+
+    /* ── Circuit Flow Steps ── */
+    .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    font-size: 0.64em;                 /* compact flow steps */
+    margin-bottom: 0.28em;
+    line-height: 1.5;
+    color: #c9d1d9;
+    flex-wrap: wrap;
+    }
+
+    .flow-step .gate {
+    background: rgba(121,192,255,0.12);
+    border: 1px solid rgba(121,192,255,0.25);
+    border-radius: 4px;
+    padding: 0.06em 0.45em;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.92em;
+    color: var(--color-accent2);
+    white-space: nowrap;
+    }
+
+    .flow-step .arrow {
+    color: var(--color-primary);
+    font-weight: 700;
+    }
+
+    /* ── Gates Grid ── */
+    .gates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35em;
+    margin-top: 0.3em;
+    }
+
+    .gate-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    font-size: 0.64em;                 /* compact gate list */
+    color: var(--color-muted);
+    line-height: 1.5;
+    }
+
+    .gate-badge {
+    background: rgba(240,178,71,0.1);
+    border: 1px solid rgba(240,178,71,0.2);
+    border-radius: 4px;
+    padding: 0.06em 0.5em;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.92em;
+    color: var(--color-primary);
+    white-space: nowrap;
+    }
+
+    /* ── Image Caption ── */
+    .img-caption {
+    font-size: 0.58em;                 /* smaller image captions */
+    color: var(--color-muted);
+    text-align: center;
+    margin-top: 0.45em;
+    font-style: italic;
+    }
+
+    /* ── Slide Tag (section label) ── */
+    .slide-tag {
+    font-size: 0.68em;                 /* ~15px — decorative label, small is OK */
+    font-family: "JetBrains Mono", monospace;
+    background: rgba(240,178,71,0.1);
+    border: 1px solid rgba(240,178,71,0.25);
+    border-radius: 4px;
+    padding: 0.12em 0.55em;
+    color: var(--color-primary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+    display: block;
+    }
+
+    /* ── IO Cards (System Overview slide) ── */
+    .io-wrap {
+    display: flex;
+    gap: 0.85em;
+    margin-top: 0.35em;
+    }
+
+    .io-card {
+    flex: 1;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.5em 0.65em;
+    }
+
+    .io-card h4 {
+    font-size: 0.62em;                 /* smaller IO card headings */
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35em;
+    }
+
+    .io-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.64em;                  /* compact IO rows */
+    padding: 0.22em 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #c9d1d9;
+    line-height: 1.5;
+    }
+
+    .io-row:last-child { border-bottom: none; }
+
+    .io-row .label { color: var(--color-muted); }
+    .io-row .val {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--color-accent2);
+    font-size: 0.95em;
+    }
+
+    /* ── Truth Table specific ── */
+    .truth-table {
+    font-size: 0.58em;                 /* ~16px — compressed for all 16 rows */
+    }
+
+    .truth-table th { font-size: 0.68em; }
+
+    .truth-table td { padding: 0.12em 0.25em; }
+
+    /* ── Thank You Slide ── */
+    .thankyou-slide { text-align: center !important; }
+
+    .thankyou-slide h1 {
+    font-size: 4em;
+    margin-bottom: 0.15em;
+    }
+
+    .thankyou-slide h3 {
+    text-transform: none;
+    color: var(--color-muted);
+    font-size: 0.92em;                 /* ~20px */
+    letter-spacing: 0;
+    }
+
+    /* ── Progress Bar ── */
+    .reveal .progress { height: 3px; color: var(--color-primary); }
+    .reveal .progress span { background: var(--color-primary); transition: width 0.8s ease; }
+
+    /* ── Slide Number ── */
+    .reveal .slide-number {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    background: transparent;
+    font-family: "JetBrains Mono", monospace;
+    }
+
+    /* ── Controls ── */
+    .reveal .controls { color: var(--color-primary); }
+
+    /* ── QR / footer link ── */
+    .qr-link {
+    margin-top: 1em;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58em;                 /* smaller footer QR/link */
+    color: var(--color-muted);
+    }
+
+    .qr-link a { color: var(--color-accent2); text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- ═══════ SLIDE 1 — TITLE ═══════ -->
+  <section class="title-slide" data-background-gradient="radial-gradient(ellipse at 30% 40%, rgba(240,178,71,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 70%, rgba(126,231,135,0.06) 0%, transparent 50%), linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <h1>Smart Switch</h1>
+    <h3>An intelligent room lighting decision system — detects room conditions<br>and automatically decides whether to turn the light ON or OFF</h3>
+
+    <div class="team-grid">
+      <div class="team-member">
+        😎 <strong>Maxmudov Vosiqxoja</strong><br>
+        <span class="role">Web &amp; Python Developer, Git Manager</span>
+      </div>
+      <div class="team-member">
+        🎮 <strong>Arslan Gafarov</strong><br>
+        <span class="role">Built homes in Minecraft, took the demo videos</span>
+      </div>
+      <div class="team-member">
+        💡 <strong>Shaxizoda Shernazarova</strong><br>
+        <span class="role">Senior Logic Circuits &amp; CircuitVerse Developer</span>
+      </div>
+      <div class="team-member">
+        😌 <strong>Muxtorov Humoyun</strong><br>
+        <span class="role">Docs &amp; requirements — chill guy</span>
+      </div>
+    </div>
+
+    <div>
+      <span class="course-badge">EEE120 — Digital Design Fundamentals &nbsp;·&nbsp; Dr. Rajan Tripathi</span>
+    </div>
+
+    <aside class="notes">
+      Introduce the project and team. Mention this is a rule-based digital circuit project for EEE120. Each member had a distinct role.
+    </aside>
+  </section>
+
+  <!-- ═══════ SLIDE 2 — PROBLEM STATEMENT ═══════ -->
+  <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <span class="slide-tag">01 — Problem</span>
+    <h2>What Problem Are We Solving?</h2>
+
+    <div class="row">
+      <div class="col-text">
+        <ul>
+          <li>💡 Lights left <strong>ON in empty rooms</strong> waste energy daily — a small but real global problem</li>
+          <li>🏠 <strong>Manual switching</strong> is inconvenient and often forgotten</li>
+          <li>⚡ No smart logic = <strong>no context-awareness</strong> (dark? occupied? saving mode?)</li>
+          <li>🔘 Existing smart systems are <em>complex and expensive</em> — we model the core logic simply</li>
+        </ul>
+
+        <div class="callout-box" >
+          <strong>Our Solution:</strong> A rule-based digital circuit that decides light state from
+          <strong>4 room conditions</strong>, implemented in combinational logic.
+        </div>
+      </div>
+
+      <div class="col-img">
+        <div style="font-size:6em; text-align:center; line-height:1;">💡</div>
+        <div style="font-size:0.72em; color:var(--color-muted); text-align:center; margin-top:0.5em; max-width:180px; line-height:1.4;">
+          Simple digital logic can solve real-world energy problems
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      Explain the motivation — energy waste, inconvenience of manual switches, and why we chose a logic-circuit approach over complex IoT.
+    </aside>
+  </section>
+
+  <!-- ═══════ SLIDE 3 — SYSTEM OVERVIEW (vertical stack) ═══════ -->
+  <section>
+
+    <!-- ── 3a: Inputs ── -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+      <span class="slide-tag">02 — System Overview</span>
+      <h2>How It Works — Inputs</h2>
+
+      <div class="row">
+        <div class="col-text">
+          <h3>4 Binary Inputs</h3>
+
+          <div class="io-wrap">
+            <div class="io-card">
+              <h4>Input Signals</h4>
+              <div class="io-row"><span class="label">Person Detected</span><span class="val">P</span></div>
+              <div class="io-row"><span class="label">Room Dark</span><span class="val">D</span></div>
+              <div class="io-row"><span class="label">Manual Switch</span><span class="val">M</span></div>
+              <div class="io-row"><span class="label">Energy Saving</span><span class="val">E</span></div>
+            </div>
+
+            <div class="io-card">
+              <h4>Output</h4>
+              <div class="io-row"><span class="label">Light (LED)</span><span class="val">L</span></div>
+              <div style="margin-top:0.5em; font-size:0.7em; color:var(--color-muted); line-height:1.4;">
+                Each signal is binary:<br><strong>0</strong> = OFF / absent<br><strong>1</strong> = ON / present
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box" style="margin-top:1em;">
+            <strong>16 total combinations</strong> — 4 inputs × 2 states each = 2⁴ = 16 rows in the truth table
+          </div>
+        </div>
+
+        <div class="col-img">
+          <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:1em 1.2em; text-align:center;">
+            <div style="font-size:2.5em; margin-bottom:0.3em;">🏠</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65em; color:var(--color-muted); line-height:2;">
+              <div>P · D → <span style="color:var(--color-accent);">AND</span></div>
+              <div>M → <span style="color:var(--color-accent);">OR</span></div>
+              <div>E → <span style="color:#d2a8ff;">NOT</span></div>
+              <div style="border-top:1px solid var(--color-border); margin-top:0.3em; padding-top:0.3em;">
+                → <span style="color:var(--color-primary);">LED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="notes">
+        Walk through each input signal and what it represents in the physical world. Emphasize all inputs are binary — no analog, no complexity.
+      </aside>
+    </section>
+
+    <!-- ── 3b: Logic Rules ── -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+      <span class="slide-tag">02 — System Overview</span>
+      <h2>How It Works — Decision Rules</h2>
+
+      <div class="row">
+        <div class="col-text">
+          <h3>Core Logic Rules</h3>
+          <ul>
+            <li>Light turns <strong>ON</strong> if <strong>person is present AND room is dark</strong></li>
+            <li>Light turns <strong>ON</strong> if <strong>Manual switch is forced ON</strong></li>
+            <li>In <strong>Energy Saving Mode</strong> → light only turns ON if person is present</li>
+            <li>Manual switch overridden by Energy Saving when no person detected</li>
+          </ul>
+
+          <div class="success-box" style="margin-top:0.6em;">
+            <strong>Result:</strong> Context-aware lighting — no unnecessary power draw, respects user override, enforces saving mode when enabled.
+          </div>
+        </div>
+
+        <div class="col-img">
+          <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; padding:0.7em 0.8em; width:100%;">
+            <div style="font-size:0.68em; font-family:'JetBrains Mono',monospace; line-height:2; color:#c9d1d9;">
+              <div><span style="color:var(--color-muted);">IF</span> P=1 <span style="color:var(--color-muted);">AND</span> D=1 → <span style="color:var(--color-accent);">Light ON</span></div>
+              <div><span style="color:var(--color-muted);">IF</span> M=1 → <span style="color:var(--color-accent);">Light ON</span></div>
+              <div><span style="color:var(--color-muted);">IF</span> E=1 <span style="color:var(--color-muted);">AND</span> P=0 → <span style="color:#ef4444;">Light OFF</span></div>
+              <div><span style="color:var(--color-muted);">IF</span> E=1 <span style="color:var(--color-muted);">AND</span> P=1 → <span style="color:var(--color-accent);">Light ON</span></div>
+            </div>
+          </div>
+
+          <div style="font-size:0.65em; color:var(--color-muted); text-align:center; margin-top:0.6em; line-height:1.4;">
+            Plain-English rule summary<br>before formalizing into Boolean logic
+          </div>
+        </div>
+      </div>
+
+      <aside class="notes">
+        Explain the decision priority. Energy saving mode acts as a gate that can override manual input. This is the human-readable version before the boolean expression.
+      </aside>
+    </section>
+
+  </section>
+
+  <!-- ═══════ SLIDE 4 — LOGIC DESIGN (vertical stack) ═══════ -->
+  <section>
+
+    <!-- ── 4a: Boolean Expression + Gates ── -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+      <span class="slide-tag">03 — Logic Design</span>
+      <h2>The Logic Behind the Switch</h2>
+
+      <div class="row">
+        <div class="col-text">
+          <h3>Boolean Expression</h3>
+          <div class="bool-expr">
+            $$L = \bigl(((P\land D)\lor M)\land\lnot E\bigr)\lor (P\land E)$$
+          </div>
+
+          <h3 style="margin-top:0.6em;">Gates Used</h3>
+          <div class="gates-grid">
+            <div class="gate-item"><span class="gate-badge">AND</span> P · D — person &amp; dark</div>
+            <div class="gate-item"><span class="gate-badge">AND</span> P · E — person &amp; saving</div>
+            <div class="gate-item"><span class="gate-badge">OR</span>&nbsp; (P·D) + M</div>
+            <div class="gate-item"><span class="gate-badge">NOT</span> Invert E signal</div>
+            <div class="gate-item"><span class="gate-badge">AND</span> OR result · ¬E</div>
+            <div class="gate-item"><span class="gate-badge">OR</span>&nbsp; Final output gate</div>
+          </div>
+        </div>
+
+        <div class="col-img">
+          <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; padding:0.7em; text-align:center; width:100%;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.7em; color:var(--color-muted); line-height:1.3; text-align:left;">
+              <div style="margin-bottom:0.3em; color:var(--color-accent2); font-size:0.9em;">5+ gates total</div>
+              <div>· 2× AND (inputs)</div>
+              <div>· 1× OR (first branch)</div>
+              <div>· 1× NOT (energy)</div>
+              <div>· 1× AND (branch 1 gate)</div>
+              <div>· 1× OR (final merge)</div>
+            </div>
+          </div>
+          <div style="font-size:0.62em; color:var(--color-muted); text-align:center; margin-top:0.5em; line-height:1.4;">
+            Combinational logic only —<br>no clock, no memory, no flip-flops
+          </div>
+        </div>
+      </div>
+
+      <aside class="notes">
+        Walk through the boolean expression carefully. Explain why two branches are needed — the energy saving mode creates a conditional override path.
+      </aside>
+    </section>
+
+  </section>
+
+  <!-- ═══════ SLIDE 5 — TRUTH TABLE ═══════ -->
+  <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <span class="slide-tag">04 — Truth Table</span>
+    <h2>Truth Table — All 16 Input Combinations</h2>
+
+    <table class="truth-table">
+      <thead>
+        <tr>
+          <th>Person (P)</th>
+          <th>Dark (D)</th>
+          <th>Manual (M)</th>
+          <th>EnergySave (E)</th>
+          <th>Light Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="light-off"><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="light-off"><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr class="light-on" ><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr class="light-off"><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr class="light-off"><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="light-off"><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr class="light-on" ><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr class="light-off"><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr class="light-off"><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="light-on" ><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr class="light-on" ><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr class="light-on" ><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+        <tr class="light-on" ><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr class="light-on" ><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr class="light-on" ><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr class="light-on" ><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+      </tbody>
+    </table>
+
+    <div style="display:flex; gap:1.2em; margin-top:0.5em; font-size:0.68em;">
+      <span style="color:var(--color-accent);">■ Green = Light ON (9 cases)</span>
+      <span style="color:#ef4444;">■ Red = Light OFF (7 cases)</span>
+    </div>
+
+    <aside class="notes">
+      Walk through a few interesting rows — especially row 4 (M=1, E=1, no person → light stays OFF) and row 10 (P=1, E=1, no dark → light ON anyway due to energy save override).
+    </aside>
+  </section>
+
+  <!-- ═══════ SLIDE 6 — CIRCUITVERSE DESIGN ═══════ -->
+  <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <span class="slide-tag">05 — Simulation</span>
+    <h2>Circuit in Action — CircuitVerse Simulation</h2>
+
+    <div class="row">
+      <div class="col-text">
+        <h3>Simulation Details</h3>
+        <ul>
+          <li>Full working simulation built in <strong>CircuitVerse</strong></li>
+          <li>4 labeled inputs: <em>Person, Dark, Manual, EnergySave</em></li>
+          <li>Output: <strong>LED indicator</strong> (lights up = ON)</li>
+          <li>Gates used: <strong>AND, OR, NOT</strong> — 5+ gates total</li>
+        </ul>
+
+        <div class="callout-box" style="margin-top:0.6em;">
+          <strong>Verified:</strong> All 16 combinations tested against the truth table — 100% match.
+        </div>
+      </div>
+
+      <div class="col-img wide">
+        <div style="margin-top:-0.4em; width:100%;">
+          <img src="images/circuit_verse.jpg"
+               alt="Smart Room Light Controller — CircuitVerse Simulation screenshot"
+               style="width:100%; max-height:620px; border:1px solid rgba(126,231,135,0.2);" />
+          <p class="img-caption">Smart Room Light Controller — CircuitVerse Simulation</p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      Show the actual circuit screenshot. Point out the input toggles on the left and the LED output on the right. Walk through one test case live if possible.
+    </aside>
+  </section>
+
+  <!-- ═══════ SLIDE 7 — LIVE DEMO ═══════ -->
+  <section data-background-gradient="radial-gradient(ellipse at 50% 50%, rgba(126,231,135,0.06) 0%, transparent 70%), linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <span class="slide-tag">06 — Demo</span>
+    <h2>See It Live</h2>
+
+    <div style="text-align:center; margin-top:0.6em;">
+      <div style="font-size:0.82em; color:var(--color-muted); margin-bottom:1em;">
+        Full interactive demo — toggle all 4 inputs and see the light output update in real time
+      </div>
+
+      <a class="demo-btn" href="https://keesouwoudba.github.io/smart-switch/" target="_blank">
+        <span class="demo-arrow">▶</span> Try It Now
+      </a>
+
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.62em; color:var(--color-muted); margin-top:0.8em;">
+        https://keesouwoudba.github.io/smart-switch/
+      </div>
+
+      <div style="display:flex; justify-content:center; gap:2em; margin-top:1.2em; font-size:0.72em; color:var(--color-muted);">
+        <div style="text-align:center;">
+          <div style="font-size:1.6em; margin-bottom:0.2em;">🌐</div>
+          <div>Web Interface</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.6em; margin-bottom:0.2em;">⚡</div>
+          <div>Real-Time Logic</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.6em; margin-bottom:0.2em;">📊</div>
+          <div>Live Truth Table</div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      Open the link in a browser tab. Toggle inputs and show how the LED reacts. Demonstrate the energy saving mode override specifically — it's the most interesting case.
+    </aside>
+  </section>
+
+  <!-- ═══════ SLIDE 8 — AI & LLM USAGE ═══════ -->
+  <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <span class="slide-tag">07 — AI Tools</span>
+    <h2>How We Used AI Tools</h2>
+
+    <div class="ai-cards">
+
+      <div class="ai-card">
+        <img src="https://cdn-public.softwarereviews.com/production/favicons/offerings/11687/original/claude-color.png"
+             alt="Claude AI logo" />
+        <h4>Claude</h4>
+        <ul>
+          <li>Explained circuit design concepts</li>
+          <li>Helped identify the right type of combinational circuit</li>
+          <li>Guided logic structure and gate selection</li>
+        </ul>
+      </div>
+
+      <div class="ai-card">
+        <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*8xXlqP3d8bzhTkLgOVYNWw.png"
+             alt="Google Stitch logo"
+             id="stitch-img" />
+        <h4>Google Stitch</h4>
+        <ul>
+          <li>Generated initial website design</li>
+          <li>Produced <em>Design.md</em> and HTML/CSS boilerplate</li>
+          <li>Provided visual layout starting point</li>
+        </ul>
+      </div>
+
+      <div class="ai-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd4Ge-kF2agKwPQahbpEg5hshKuSFTG9ZVuQ&s"
+             alt="GitHub Copilot logo" />
+        <h4>GitHub Copilot</h4>
+        <ul>
+          <li>Used presentation template + prompt structure</li>
+          <li>Generated final <em>presentation.html</em> content</li>
+          <li>Accelerated code writing and review</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; font-size:0.67em; color:var(--color-muted); margin-top:0.8em; font-style:italic;">
+      All AI output was reviewed, tested, and understood by the team.
+    </div>
+
+    <aside class="notes">
+      Explain that AI was used as a tool, not a replacement for understanding. Each team member verified and understood the AI-generated content before submitting.
+    </aside>
+  </section>
+
+  <!-- ═══════ SLIDE 9 — CONCLUSION ═══════ -->
+  <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <span class="slide-tag">08 — Conclusion</span>
+    <h2>Wrapping Up</h2>
+
+    <div class="conclusion-grid">
+
+      <div class="conc-card card-worked">
+        <div class="card-title">✅ What Worked</div>
+        <ul>
+          <li>Team played to individual strengths — everyone delivered their role</li>
+          <li>Circuit logic correctly maps to Python and web demo</li>
+          <li>Full pipeline: design → simulation → code → deployment</li>
+        </ul>
+      </div>
+
+      <div class="conc-card card-challenge">
+        <div class="card-title">⚠️ Challenges</div>
+        <ul>
+          <li>Time management during finals week — deadlines everywhere</li>
+          <li>Almost zero breathing room in the schedule</li>
+          <li>Coordinating across different tools and workflows</li>
+        </ul>
+      </div>
+
+      <div class="conc-card card-future">
+        <div class="card-title">🔭 Future Work</div>
+        <ul>
+          <li>Add real sensor input (PIR + light sensor hardware)</li>
+          <li>Mobile / IoT integration</li>
+          <li>Sequential logic: timer-based auto-off</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="callout-box" style="margin-top:0.6em; text-align:center;">
+      From a boolean expression on paper → to a live deployed web app. That's the full EEE120 journey. 🚀
+    </div>
+
+    <aside class="notes">
+      Summarize the project journey. Acknowledge the team's effort during a tough finals week. Mention the future scope briefly but don't dwell on it — end on a high note.
+    </aside>
+  </section>
+
+  <!-- ═══════ SLIDE 10 — THANK YOU ═══════ -->
+  <section class="thankyou-slide" data-background-gradient="radial-gradient(ellipse at 50% 30%, rgba(240,178,71,0.1) 0%, transparent 60%), radial-gradient(ellipse at 50% 80%, rgba(126,231,135,0.06) 0%, transparent 50%), linear-gradient(135deg, #0d1117 0%, #0f1923 100%)">
+    <h1>Thank You</h1>
+    <h3>If you have any questions, feel free to ask!</h3>
+
+    <div style="margin-top:1.4em; display:flex; justify-content:center; gap:1em;">
+      <div style="font-size:2em;">😎</div>
+      <div style="font-size:2em;">🎮</div>
+      <div style="font-size:2em;">💡</div>
+      <div style="font-size:2em;">😌</div>
+    </div>
+
+    <div style="margin-top:1em; font-size:0.72em; color:var(--color-muted);">
+      Maxmudov &nbsp;·&nbsp; Gafarov &nbsp;·&nbsp; Shernazarova &nbsp;·&nbsp; Muxtorov
+    </div>
+
+    <div class="qr-link">
+      <br>🔗 <a href="https://keesouwoudba.github.io/smart-switch/" target="_blank">keesouwoudba.github.io/smart-switch</a>
+      &nbsp;·&nbsp; EEE120 &nbsp;·&nbsp; Dr. Rajan Tripathi
+    </div>
+
+    <aside class="notes">
+      Thank the audience and supervisor. Keep the Q&A open. The live demo link is shown at the bottom for anyone who wants to try it after the presentation.
+    </aside>
+  </section>
+
+</div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Reveal.js Core JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+
+<script>
+  Reveal.initialize({
+    width: 1100,
+    height: 700,
+    margin: 0.07,
+    center: true,
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    controls: true,
+    controlsLayout: 'bottom-right',
+    controlsBackArrows: 'faded',
+    progress: true,
+    slideNumber: 'c/t',
+    navigationMode: 'default',
+    plugins: [RevealNotes],
+  });
+</script>
+<!-- Run KaTeX auto-render after Reveal initializes -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '\\(', right: '\\)', display: false}
+        ]
+      });
+    }
+  });
+</script>
+</body>
+</html>
