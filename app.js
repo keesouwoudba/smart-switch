@@ -37,14 +37,14 @@ const enterRoomBtn = $("#enter-room-btn");
 const exitRoomBtn = $("#exit-room-btn");
 const videoTag = $("#video-tag");
 const navToggleBtn = $("#nav-toggle-btn");
-const sideNav = document.querySelector('nav');
+const sideNav = document.querySelector("nav");
 
 if (navToggleBtn && sideNav) {
-    navToggleBtn.addEventListener('click', () => {
-        sideNav.classList.toggle('hidden');
+    navToggleBtn.addEventListener("click", () => {
+        sideNav.classList.toggle("hidden");
         // update aria attribute for accessibility
-        const isHidden = sideNav.classList.contains('hidden');
-        sideNav.setAttribute('aria-hidden', isHidden ? 'true' : 'false');
+        const isHidden = sideNav.classList.contains("hidden");
+        sideNav.setAttribute("aria-hidden", isHidden ? "true" : "false");
     });
 }
 
@@ -92,6 +92,9 @@ exitRoomBtn.on("click", () => {
 
 function inconsistentStateWarning() {
     console.warn("Inconsistent state detected. Defaulting to a safe video source.");
+    app.enteringTheRoom = false;
+    app.leavingTheRoom = false;
+    app.standingOutside = true;
     updateVideoSource(videoSources.v1_src); // Default to standing outside, light off
 }
 
@@ -104,16 +107,20 @@ function renderVideo() {
             //show video where light was on where entering the room
             updateVideoSource(videoSources.v4_src);
         } else {
-            inconsistentStateWarning();
+            //this case should not be inconsistent,  it is just default entering the room in smart switch. therefore, we can just show the video where light turns on when entering the room, but we can also log a warning for debugging purposes
+            updateVideoSource(videoSources.v3_src);
+            console.warn("Entering the room without energy saving mode or light switch on. Defaulting to video where light turns on when entering the room.");
         }
     } else if (app.standingOutside) {
-        // Outside idle state: light on => V2, otherwise V1.
-        if (app.lightSwitchOn) {
+        if (app.energySavingMode) {
+            //enegry saving means: light off. on only when user inside
+            updateVideoSource(videoSources.v1_src);
+        } else if (app.lightSwitchOn) {
+            //light switch on means: light on, even when user outside
             updateVideoSource(videoSources.v2_src);
         } else {
-            updateVideoSource(videoSources.v1_src);
+            inconsistentStateWarning();
         }
-
     } else if (app.leavingTheRoom){
         //update video based on light switch status or energy saving mode, leave the room and then update the statuses and make standing outside true and render that video
         if (app.energySavingMode) {
@@ -121,14 +128,17 @@ function renderVideo() {
         } else if (app.lightSwitchOn) {
             updateVideoSource(videoSources.v6_src);
         } else {
-            inconsistentStateWarning();
+            //default as if it were in energy saving mode, which is more common for leaving the room, and also log a warning for debugging purposes
+            console.warn("Leaving the room without energy saving mode or light switch on. Defaulting to video where light turns off when leaving the room.");
+            updateVideoSource(videoSources.v5_src);
         }
         // After showing the leaving video, reset to default state
         setTimeout(() => {
             app.leavingTheRoom = false;
+            app.enteringTheRoom = false;
             app.standingOutside = true;
             renderVideo(); // Render the standing outside video based on current switch states
-        }, 5000); // Assuming each video is around 5 seconds long
+        }, 10000); // Assuming each video is around 5 seconds long
     }
 }
 

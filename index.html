@@ -9,7 +9,7 @@
     <script src="app.js" defer type="module"></script>
     <link href="./dist/output.css" rel="stylesheet">
 </head>
-<body class="bg-background text-on-background min-h-screen overflow-hidden flex flex-col font-body-reg">
+<body class="bg-background text-on-background min-h-screen overflow-x-hidden flex flex-col font-body-reg">
     <!-- TopAppBar -->
     <header class="bg-[#131313] font-['Space_Grotesk'] uppercase tracking-tighter docked full-width top-0 border-b-4 border-stone-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center px-4 h-16 w-full z-50 fixed">
         <div class="flex items-center gap-6">
@@ -19,25 +19,21 @@
             </div>
         </div>
         <div class="flex items-center gap-4">
-                <!-- Mobile nav toggle -->
-                <button id="nav-toggle-btn" class="md:hidden text-stone-400 hover:text-white hover:bg-stone-800 transition-colors p-2" aria-label="Toggle navigation">
-                    <span class="material-symbols-outlined">menu</span>
-                </button>
-                <button class="text-stone-400 hover:text-white hover:bg-stone-800 transition-colors p-2">
-                    <span class="material-symbols-outlined">settings</span>
-                </button>
-                <button class="text-stone-400 hover:text-white hover:bg-stone-800 transition-colors p-2">
-                    <span class="material-symbols-outlined">help</span>
-                </button>
-                <div class="w-8 h-8 bg-surface-variant border-2 border-outline flex items-center justify-center overflow-hidden">
+            <button class="text-stone-400 hover:text-white hover:bg-stone-800 transition-colors p-2">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+            <button class="text-stone-400 hover:text-white hover:bg-stone-800 transition-colors p-2">
+                <span class="material-symbols-outlined">help</span>
+            </button>
+            <div class="w-8 h-8 bg-surface-variant border-2 border-outline flex items-center justify-center overflow-hidden">
                 <img alt="Engineer Avatar" class="w-full h-full object-cover" data-alt="A low-resolution pixel art style portrait of an engineer character, featuring a rugged face with goggles resting on the forehead. The portrait is rendered in a limited palette of earth tones and grays, emphasizing a retro gaming aesthetic. High-contrast blocky shading defines the facial features against a dark, solid background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm0VgOmV3fXDpre6CR4KOKZe_uF-KeEQJpGQjI5oZprzmsMb9LN18hlsJkuyIe2tSCogHsvCu7xpSd70UBDUtv95Lk-cjNIGuH-1hKrzq6Xku-1wCTukl5w3kzdCgou10vKIqXbZHDktJstmwtiQNQUNPTenM_4LYTqpc3DVY0ItbQW3EuZlmFJfKUV2m0Nuux4NG-4ts8iCVAIarXEcUu6uD0IIelyEXbxi5tKbO1mvugvIMpYoIV-kJ3UDlvnE0ySv-zECJMtqE"/>
             </div>
         </div>
     </header>
     <!-- Main Content Area -->
-    <main class="grow flex pt-16 h-screen">
+    <main class="grow pt-16 md:h-screen">
         <!-- Viewport Canvas -->
-        <div class="grow p-viewport-margin flex flex-col gap-gutter overflow-y-auto bg-surface-dim md:mr-90">
+        <div class="grow p-4 md:p-viewport-margin flex flex-col gap-gutter overflow-y-auto bg-surface-dim md:mr-90">
             <!-- Central Video Viewport -->
             <div class="w-full max-w-6xl mx-auto aspect-video bg-surface-container-lowest brick-border relative flex items-center justify-center overflow-hidden">
                 <video class="w-full h-full object-cover" src="data/v1.mp4" autoplay muted playsinline preload="auto" id="video-tag"></video>
@@ -50,7 +46,7 @@
         </div>
     </main>
     <!-- SideNavBar -->
-    <nav class="hidden md:flex bg-[#1a1a1a] text-stone-200 font-['Space_Grotesk'] text-xs font-bold uppercase md:fixed md:right-0 md:top-0 md:h-full md:w-90 fixed bottom-0 left-0 h-56 w-full border-l-4 md:border-l-4 border-stone-900 shadow-[-4px_0px_0px_0px_rgba(0,0,0,1)] flex flex-col md:pt-16 pt-4 z-40" aria-hidden="true">
+    <nav class="bg-[#1a1a1a] text-stone-200 font-['Space_Grotesk'] text-xs font-bold uppercase w-full border-t-4 border-stone-900 shadow-[0_-4px_0px_0px_rgba(0,0,0,1)] flex flex-col pt-4 md:fixed md:right-0 md:top-0 md:h-full md:w-90 md:border-t-0 md:border-l-4 md:shadow-[-4px_0px_0px_0px_rgba(0,0,0,1)] md:pt-16 z-40">
         <!-- Header -->
         <div class="p-5 border-b-4 border-stone-900 bg-[#131313]">
             <h2 class="text-xl text-stone-100 font-headline-md tracking-tight">CONTROL_UNIT</h2>
