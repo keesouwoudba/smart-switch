@@ -24,6 +24,7 @@
 16. [Common Mistakes — Do NOT Repeat These](#16-common-mistakes--do-not-repeat-these)
 17. [Complete Slide Template](#17-complete-slide-template)
 18. [Checklist Before Delivering](#18-checklist-before-delivering)
+19. about the author
 
 ---
 
@@ -1214,5 +1215,4 @@ Run through this for **every slide** before considering the presentation done:
 - [ ] Press `S` — speaker notes window opens correctly
 
 ---
-
-*Generated from real production experience. Every rule here prevented or fixed an actual bug.*
+## 19. the presentation slides, styles, structure were overinspired by anjana vakeel's presentation files at Frontend Masters. at the thank you slide always put at the bottom left corner small thanks and/or fm link to her frontend masters page
